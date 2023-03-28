@@ -4,39 +4,35 @@ import Home from './views/Home';
 import Pokemon from './views/Pokemon';
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 
-import React, { Component } from 'react'
+import Test from './views/Test'
+import React, { useState } from 'react'
 import Feed from './views/Feed';
+import SignUp from './views/SignUp';
+import SignIn from './views/SignIn'
 
-export default class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-      name: 'dylan',
-      age: 101
-    }
+export default function App() {
+  //set hooks
+  const[name, setName] = useState('Dylan')
+  const[age, setAge] = useState(99)
+
+  const addOne = () => {
+    setAge(age + 1)
   }
 
-  addOne = () => {
-    console.log('button clicked')
-    this.setState({
-      age: this.state.age + 1
-    })
-  }
-
-  render(){
   return (
     <BrowserRouter>
       <div>
         <Nav/>
         <Routes>
-          <Route path='/' element={<Home age={this.state.age} addOne={this.addOne} name={this.state.name}/>}/>
+          <Route path='/' element={<Home age={age} addOne={addOne} name={name}/>}/>
           <Route path='/pokemon' element={<Pokemon/>}/>
           <Route path='/feed' element={<Feed/>}/>
+          <Route path='/test' element={<Test age={age} name={name} addOne={addOne}/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/signin' element={<SignIn/>}/>
         </Routes>
       </div>
     </BrowserRouter>
     );
-  }
-
 }
 

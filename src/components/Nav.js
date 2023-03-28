@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import AuthState from './AuthState'
+
 
 export default class Nav extends Component {
   render() {
@@ -23,10 +25,27 @@ export default class Nav extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/feed">Feed</Link>
+                    <Link className="nav-link" to="/feed">
+                        Feed
+                    </Link>
                 </li>
                 <li className="nav-item">
-                <a className="nav-link disabled" href="#">Disabled</a>
+                    <Link className="nav-link disabled" to="/test">
+                        Functional Component
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link disabled" to="/signup">
+                        Sign Up
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link disabled" to="/signin">
+                        Sign In
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <AuthState/>
                 </li>
             </ul>
             </div>
