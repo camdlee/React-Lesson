@@ -13,7 +13,7 @@ export default class Pokemon extends Component {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
         const data = await response.json()
         console.log(data)
-
+        
 
         this.setState({
             name: data.name,

@@ -8,7 +8,8 @@ import Test from './views/Test'
 import React, { useState } from 'react'
 import Feed from './views/Feed';
 import SignUp from './views/SignUp';
-import SignIn from './views/SignIn'
+import SignIn from './views/SignIn';
+import ChampionCrud from './views/ChampionCrud'
 
 export default function App() {
   //set hooks
@@ -30,6 +31,7 @@ export default function App() {
           <Route path='/test' element={<Test age={age} name={name} addOne={addOne}/>}/>
           <Route path='/signup' element={<SignUp/>}/>
           <Route path='/signin' element={<SignIn/>}/>
+          <Route path='/champion' element={<ChampionCrud/>}/>
         </Routes>
       </div>
     </BrowserRouter>

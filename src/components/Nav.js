@@ -35,6 +35,11 @@ export default class Nav extends Component {
                     </Link>
                 </li>
                 <li className="nav-item">
+                    <Link className="nav-link disabled" to="/champion">
+                        Champion Builder
+                    </Link>
+                </li>
+                <li className="nav-item">
                     <Link className="nav-link disabled" to="/signup">
                         Sign Up
                     </Link>
