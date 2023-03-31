@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { doc, setDoc, collection, QuerySnapshot, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import ChampionCard from '../components/ChampionCard';
 
 
 const theme = createTheme();
@@ -19,6 +20,7 @@ export default function SignIn() {
 
     const [champion,setChampion] = useState('')
     const [championData, setChampionData] = useState({})
+    const [team, setTeam] = useState([])
     
     const getChampionData = async (name) => {
         const response = await fetch(`http://ddragon.leagueoflegends.com/cdn/13.6.1/data/en_US/champion/${name}.json`)
@@ -44,27 +46,36 @@ export default function SignIn() {
         getChampionData(championTitle)
     };
 
+
     useEffect(()=>{
         const addChampionToFirebase = async () => {
             await setDoc(doc(db, "users", auth.currentUser.uid, "champions", championData.type), {
                 name: championData.name,
                 title: championData.title,
                 lore: championData.lore,
-                image: championData.image
+                image: championData.image,
+                type: championData.type
             })
         }
+
         if(Object.keys(championData).length > 0){
             addChampionToFirebase()
         }
+        console.log(teamArr)
+        currentTeam()
     }, [championData])
+
 
     // fucntion to see team of current user
     const currentTeam = async () => {
+        const teamArr = []
         const subColRef = collection(db, "users", auth.currentUser.uid, "champions")
         onSnapshot(subColRef, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                console.log(doc.data())
+                teamArr.push(doc.data())
             })
+            setTeam(teamArr)
+            console.log(team)
         })
     }
 
@@ -72,6 +83,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
+      {team.length > 0 ? <p>{team[0].title}</p> : <p>no team</p>}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -104,16 +116,24 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Add to Team
+            </Button>
+            <Button
+                onClick={currentTeam}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+            >
+              View Team
             </Button>
             <Grid container>
-              <Grid item>
-                <Link to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
             </Grid>
           </Box>
+          {team.map((champion) => {
+            return(
+              <ChampionCard champion={champion} currentTeam={currentTeam}/>
+            )
+          })}
         </Box>
       </Container>
     </ThemeProvider>

@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import AuthState from './AuthState'
+import { AppContext } from '../context/AppConext'
+
+export default function Nav() {
+    const{favChamp} = useContext(AppContext)
 
 
-export default class Nav extends Component {
-  render() {
     return (
     <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,8 +56,13 @@ export default class Nav extends Component {
                 </li>
             </ul>
             </div>
+            <div>
+                {favChamp ?
+                <p>My Favority Champ is {favChamp}</p> :
+                <></>
+                }
+            </div>
         </nav>
     </div>
     )
   }
-}
